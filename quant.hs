@@ -8,4 +8,6 @@ power l = filter (not . null) (powerset l)
 
 allexquantcombinations [] = []
 allexquantcombinations (l:[]) = power l
-allexquantcombinations (l:ls) = mapcomb (\a b -> [a:b]) (power l) (allexquantcombinations ls) [] []
+allexquantcombinations (l:ls) = mapcomb (\a b -> a:b:[]) (power l) (allexquantcombinations ls) [] []
+
+onion s l = s ++ foldl (++) l
