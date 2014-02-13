@@ -1,4 +1,5 @@
 ; returns the power set of l (except for empty list)
+; DONE
 (defun power (l)
   (remove-if #'null (reduce #'(lambda (i ps)
               (append (map 'list #'(lambda (e) (cons i e)) ps) ps)
@@ -6,6 +7,7 @@
   )
   
 ; returns list of all possibilities when combining the existential quantifiers
+; DONE
 (defun allexquantcombinations (l)
   (cond
     ((null l) '())
@@ -16,9 +18,11 @@
   
 ; applies keyvaluetester to all lists within a list of lists
 ; returns list of all cdrs/values of lists with first element = key
+; DONE
 (defun keyvalues (l key) (mapsingle #'keyvaluetester key l))
 
 ; returns set union of list s and list of lists l
+; DONE
 (defun onion (s l)
   (remove-duplicates (append s (reduce #'append l)))
   )

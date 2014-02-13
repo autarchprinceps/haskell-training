@@ -1,4 +1,5 @@
 ; searches for list in l with first element / key = x and returns cdr / value of it
+; DONE
 (defun keyvalue (l x)
   (cond
     ((null l) '())
@@ -8,6 +9,7 @@
   )
   
 ; maps function func over list l with single static parameter x
+; DONE
 (defun mapsingle (func x l &optional p1 p2)
   (cond
     ((null l) '())
@@ -16,6 +18,7 @@
   )
   
 ; maps function func over all possible combinations of one element out of each list l and list m
+; DONE
 (defun mapcomb (func l m &optional p1 p2)
   (cond
     ((null l) '())
@@ -24,6 +27,7 @@
   )
   
 ; returns cdr/value of list l if first element is key
+; DONE
 (defun keyvaluetester (key l)
   (cond
     ((equal key (car l)) (cdr l))

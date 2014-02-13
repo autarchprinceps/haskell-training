@@ -10,9 +10,9 @@ power l = filter (not . null) (powerset l)
 
 allexquantcombinations [] = []
 allexquantcombinations (l:[]) = power l
-ballexquantcombinations (l:ls) =  mapcomb (\a b -> a:b:[]) (power l) (allexquantcombinations ls)
+allexquantcombinations (l:ls) =  mapcomb (\a b -> a ++ b) (power l) (allexquantcombinations ls)
 
-onion s l = map head ((group . sort) (s ++ foldl (++) [] l))
+onion s l = nub (s ++ foldl (++) [] l)
 
 mapcomb func l m = [func a b | a <- l, b <- m]
 
@@ -24,3 +24,17 @@ keyvaluetester key l
 
 keyvalue [] _ = []
 keyvalue (l:ls) x = if fst l == x then snd l else keyvalue ls x
+
+-- Allen.lsp
+
+inverse l = map (keyvalue inverselist) l
+
+combinepair x y
+	| x == '=' = [y]
+	| y == '=' = [x]
+	| otherwise = keyvalue (keyvalue pmatrix x) y
+
+combine l m = nub (mapcomb combinepair l m)
+
+test a g h = foldl (&&) True [testsingle a g h, testsingle (inverse h) a (inverse g), testsingle g (inverse h) (inverse a)]
+	where testsingle l m r = intersection (combine l m) r
