@@ -52,16 +52,21 @@ test a g h = all null [testsingle a g h, testsingle (inverse h) a (inverse g), t
 
 -- Main
 -- IO ?
-readRules name = do
-	handle <- IO.openFile name IO.ReadMode
-	content <- IO.hGetContents handle
-	IO.hClose handle
-	content
+parse [] = []
+parse ('r':(';':(from:(';':(to:(';':relations))))))
+	| null geprsrel = []
+	| otherwise = [False, direction from to, geprsrel]
+	where geprsrel = words relations
 
-evaulate file
-	| null lE = test (keyvalue [] 'k' lrs) (keyvalue [] 'g' lrs) (keyvalue [] 'h' lrs)
-	| otherwise = foldl (||) False (map (`testcombination` lrs) (allexquantcombinations lE))
-	where [lrs, lE] = readRules file
+readRules name = do
+	content <- IO.readFile name
+	return [lrs, lE]
+	where rules = filter (not . null) (map parse (lines content))
+
+--evaulate file
+--	| null lE = test (keyvalue [] 'k' lrs) (keyvalue [] 'g' lrs) (keyvalue [] 'h' lrs)
+--	| otherwise = foldl (||) False (map (`testcombination` lrs) (allexquantcombinations lE))
+--	where [lrs, lE] = readRules file
 
 -- Static
 
