@@ -56,9 +56,7 @@ parse [] = []
 parse ('r':(';':(from:(';':(to:(';':relations))))))
 	| null geprsrel = []
 	| null pfad = []
-	| otherwise = do
-		if pfad !! 1 then resultrules = inverse geprsrel else resultrules = geprsrel
-		return [False, pfad !! 0, resultrules]
+	| otherwise = [False, pfad !! 0, if pfad !! 1 then inverse geprsrel else geprsrel]
 	where geprsrel = words relations
 		  pfad = direction from to
 
