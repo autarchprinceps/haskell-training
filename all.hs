@@ -56,13 +56,12 @@ parse [] = []
 parse ('r':(';':(from:(';':(to:(';':relations))))))
 	| null geprsrel = []
 	| null pfad = []
-	| otherwise = [False, pfad !! 0, if pfad !! 1 then inverse geprsrel else geprsrel]
-	where geprsrel = words relations
-		  pfad = direction from to
+	| otherwise = [False, pfad !! 0, if pfad !! 1 then inverse geprsrel else geprsrel] -- first param: which quantor does rule belong to?
+	where [geprsrel, pfad] = [words relations, direction from to]
 
 readRules name = do
 	content <- IO.readFile name
-	return [lrs, lE]
+	return (partition (!! 1) rules)
 	where rules = filter (not . null) (map parse (lines content))
 
 --evaulate file
